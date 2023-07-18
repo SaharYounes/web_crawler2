@@ -1,0 +1,23 @@
+{
+  "name": "web_crawler2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaharYounes/web_crawler2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SaharYounes/web_crawler2/issues"
+  },
+  "homepage": "https://github.com/SaharYounes/web_crawler2#readme",
+  "devDependencies": {
+    "jest": "^29.6.1"
+  }
+}
