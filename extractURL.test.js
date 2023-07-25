@@ -8,7 +8,7 @@ test("extractURL   1:normal test     2:test Multiple links    3:Relative link   
             <a href="http://heynode.com/tutorial/install-nodejs-locally-nvm"> 1: </a>
             <a href="http://heynode.com/tutorial/"> 2: </a>
             <a href="/Path/tutorial/"> 3: </a>
-            <a href="Invlaid URL> 4: </a>
+            <a href="(this is an invalid url)"> 4: </a>
         <body>
     </html>`
     const actual  = extractURL(input,baseURL,urls = [])

@@ -8,18 +8,21 @@ function extractURL(htmlText,baseURL,urls){
         if (linkElement.href[0]==="/"){
             //Relative URL
                 newURL = normilizeUrl(`${baseURL}${linkElement.href}`)
-                urls.push(newURL)  
+                urls.push(newURL)
+                console.log("added this url => " + newURL)
         }else {
             try{
+            const URLObj = new URL(linkElement.href.toLowerCase())
+            // code starts here if there are no errors
             newURL = normilizeUrl (linkElement.href)
-            urls.push(newURL)   
+            urls.push(newURL)
+            console.log("added this url => " + newURL)
             }catch(err){
-                console.log("invalid URL")
-            }
-              
+                console.log(`FAILED to add: the error"${err.message}" occured for the link : `+ linkElement.href.toLowerCase() )
+            } 
         }
     }; 
-    console.log(urls)
+    //console.log(urls)
     return urls
 }
 function removeTrailingSlahes(txt){
@@ -41,5 +44,6 @@ function normilizeUrl(urlString){
 
 module.exports = {
     normilizeUrl,
-    extractURL
+    extractURL,
+    removeTrailingSlahes
 }
