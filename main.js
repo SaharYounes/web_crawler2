@@ -1,6 +1,8 @@
-const  {normilizeUrl} = require ("./crawl.js")
-//const { normilizeUrl } = require("./crawl")
+const  {extractURL} = require ("./crawl.js")
+     baseURL = process.argv[2]
+    const response = await fetch(baseURL);
+    const urls=extractURL (response,baseURL,urls = [])
 
-console.log("hello world")
-// const (normilizeUrl) = require ("./crawl.js")
-console.log(normilizeUrl("HTTP://HEYNODE.COM/TUTORIAL/INSTALL-NODEJS-LOCALLY-NVM/","HTTP://HEYNODE.COM/TUTORIAL/INSTALL-NODEJS-LOCALLY-NVM/"))
+async function fetchfunction({
+
+})
