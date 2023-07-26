@@ -54,17 +54,11 @@ function removeTrailingSlahes(txt){
     }
     return txt
 }
-async function getHTML(URL){
-    const response = await fetch(URL)
-    const htmltext = await response.text()
-    //console.log(htmltext)
-    return htmltext
-}
+
 
 module.exports = {
     normilizeUrl,
     extractURL,
     extractURLsLoop,
-    removeTrailingSlahes,
-    getHTML
+    removeTrailingSlahes
 }
