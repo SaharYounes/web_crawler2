@@ -23,7 +23,7 @@ async function crawlPage(currentUrl,baseURL,urls){
     }catch(err){
         if(currentUrl===baseURL){ 
             console.log("   The main website Does not respond to the fetch request, No websites scraped")
-            //for (var url in urls) delete urls[url]
+            //for (var url in urls) delete urls[url] <-- No reson to delete the object anymore
             process.exit(1)
             return urls
         }
