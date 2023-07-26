@@ -1,20 +1,24 @@
 const { JSDOM } = require("jsdom");
 async function crawlAllPages(url,baseURL,urls){
     console.log("Actively crawling: "+ url)
-    const response = await fetch(url)
-    const htmltext = await response.text()
     //console.log(htmltext)
     extractURL(htmltext,url,urls)
     console.log(urls)
     return urls
 }
-async function crawlPage(url,baseURL,urls){
-    console.log("Actively crawling: "+ url)
-    const response = await fetch(url)
-    const htmltext = await response.text()
+async function crawlPage(currentUrl,baseURL,urls){
+    console.log("Actively crawling: "+ currentUrl)
+    try {
+        const response = await fetch(currentUrl)
+        //const htmltext = await response.text()
+        extractURL(await response.text(),baseURL,urls)
+    }catch(err){
+        console.log(`error in fetch : "${err.message}" for URL: ${currentUrl}`)
+        return
+    }
     //console.log(htmltext)
-    extractURL(htmltext,baseURL,urls)
-    console.log(urls)
+    //extractURL(htmltext,baseURL,urls)
+    //console.log(urls)
     return urls
 }
 
@@ -35,8 +39,15 @@ function extractURL(htmlText,baseURL,urls){
         if (linkElement.href[0]==="/"){
             //Relative URL
                 newURL = normilizeUrl(`${baseURL}${linkElement.href}`)
-                urls[newURL] = (newURL in urls) ? urls[newURL]+=1 : urls[newURL]=1
-                console.log("added this url => " + newURL)
+                if(newURL in urls){
+                    urls[newURL]+=1
+                    console.log("this url repeated => " + newURL)
+                }else{
+                    urls[newURL]=1
+                    console.log("added this url => " + newURL)
+                }
+                //urls[newURL] = (newURL in urls) ? urls[newURL]+=1 : urls[newURL]=1
+                //console.log((newURL in urls) ? "this url repeated => " + newURL:"added this url => " + newURL)
         }else {
             try{
             const URLObj = new URL(linkElement.href.toLowerCase())
@@ -61,7 +72,8 @@ function extractURL(htmlText,baseURL,urls){
 function normilizeUrl(urlString){   
 //if(urlString.length>0 && urlString[0]!=='/'){ // Absolute URL
     const URLObj = new URL(urlString.toLowerCase()) 
-    hostPath = `${URLObj.hostname}${URLObj.pathname}`
+    //hostPath = `${URLObj.hostname}${URLObj.pathname}`   <----- kept th eprotocol so i can itiratet in a loop on items rather than recursivly
+    hostPath =URLObj.href
     //Remove trailing slashes
     return removeTrailingSlahes(hostPath)
 //----------------------COMMENT--------------------            //}else{    // Relative URL        // const URLObj = new URL(baseURL + urlString.toLowerCase()) // hostPath = `${URLObj.hostname}${URLObj.pathname}`//Remove trailing slashes // return removeTrailingSlahes(hostPath)// }

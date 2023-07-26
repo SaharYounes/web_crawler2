@@ -11,18 +11,23 @@ if (process.argv.length>3){
     console.log("Too many arguments provided")
     process.exit(1)
 }
-
-let baseURLObj
-try {
-    baseURLObj = new URL(process.argv[2])
-}catch(err){
-    console.log("Invalid URL")
-    return
-}
-//console.log(baseURLObj.href)
-const baseURL = removeTrailingSlahes(baseURLObj.href)
+const baseURL = removeTrailingSlahes(process.argv[2])
 crawlPage(url = baseURL,baseURL,urls={})
-    return   
-}
+//console.log(url)
 
+setTimeout(() => { 
+    console.log("Time is up !")
+    for (const [url, occurances] of Object.entries(urls)) {
+    //console.log(`${url}: ${occurances}`);
+    //const url = `${url}`
+    //console.log(`${url}`);
+    //console.log("actively crawling: "+key)
+    crawlPage(url,baseURL,urls)
+    }console.log(urls)
+}, "500");
+setTimeout(() => {
+    console.log(urls);
+  }, "2000");
+
+}
 main()
