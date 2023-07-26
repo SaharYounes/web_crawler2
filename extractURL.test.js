@@ -1,6 +1,6 @@
 const  {extractURL} = require ("./crawl.js")
 const  {test, expect} = require ("@jest/globals")
-test("extractURL   1:normal test     2:test Multiple links    3:Relative link     4:Invalid URL",()=>{
+test("extractURL   1:normal test     2:test Multiple links    3:Relative link     4:Invalid URL     5:Irrelevant URL",()=>{
     const baseURL = 'http://heynode.com'
     const input = `
     <html>
@@ -9,6 +9,7 @@ test("extractURL   1:normal test     2:test Multiple links    3:Relative link   
             <a href="http://heynode.com/tutorial/"> 2: </a>
             <a href="/Path/tutorial/"> 3: </a>
             <a href="(this is an invalid url)"> 4: </a>
+            <a href="https://www.quel-canape.fr/canape-maison-du-monde-brooke/"> 5: </a>
         <body>
     </html>`
     const actual  = extractURL(input,baseURL,urls = [])
