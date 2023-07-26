@@ -1,29 +1,42 @@
-const  {extractURL,removeTrailingSlahes,getHTML} = require ("./crawl.js")
+const  {extractURL,extractURLsLoop,removeTrailingSlahes,getHTML} = require ("./crawl.js")
+function main(){
+if (process.argv.length<3){
+    console.log("No website provided")
+    process.exit(1)
+}
+if (process.argv.length>3){
+    console.log("Too many arguments provided")
+    process.exit(1)
+}        
 var baseURLObj
 try {
     baseURLObj = new URL(process.argv[2])
 }catch(err){
-    console.log("Invalid URL / No URL provided")
+    console.log("Invalid URL")
     return
 }
-console.log(baseURLObj.href)
+//console.log(baseURLObj.href)
 const baseURL = removeTrailingSlahes(baseURLObj.href)
-const htmltext = getHTML(baseURL).then((htmlOutPut)=>{
-    const urls = extractURL (htmlOutPut,baseURL,U=[])
-    console.log(urls)
-})
+const urlsObj = {}
+urlsObj[baseURL] = 0
+console.log(urlsObj)
+crawlPage()
+//----------------function definition:-------------
+function crawlPage(urlsObj){
 
+    const url=baseURL // url should be the key from the object loop
+    console.log("Actively crawling: "+ url)
+    
 
-    const input = `
-    <html>
-        <body>
-            <a href="http://heynode.com/tutorial/install-nodejs-locally-nvm"> 1: </a>
-            <a href="http://heynode.com/tutorial/"> 2: </a>
-            <a href="/Path/tutorial/"> 3: </a>
-            <a href="(this is an invalid url)"> 4: </a>
-            <a href="https://www.quel-canape.fr/canape-maison-du-monde-brooke/"> 5: </a>
-        <body>
-    </html>
-    `
     
-    
+    const htmltext = getHTML(url,urlsObj)
+    .then((htmlOutPut)=>{ 
+        console.log(urls)
+        const urls = extractURL (htmlOutPut,baseURL,urls)
+        return urls
+    })
+    return   
+}
+}
+
+main()

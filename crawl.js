@@ -1,5 +1,13 @@
 const { JSDOM } = require("jsdom");
- 
+function extractURLsLoop (htmlText,baseURL,urls){
+    urls[baseURL] = 0
+    for (const [key, value] of Object.entries(urls)) {
+        //console.log(`${key}: ${value}`);
+        console.log("actively crawling: "+key)
+        extractURL(key)
+    }
+}
+
 function extractURL(htmlText,baseURL,urls){
     //const urls=[]
     const DOM = new JSDOM(htmlText);
@@ -8,7 +16,7 @@ function extractURL(htmlText,baseURL,urls){
         if (linkElement.href[0]==="/"){
             //Relative URL
                 newURL = normilizeUrl(`${baseURL}${linkElement.href}`)
-                urls.push(newURL)
+                urls[newURL] = (newURL in urls) ? urls[newURL]+=1 : urls[newURL]=1
                 console.log("added this url => " + newURL)
         }else {
             try{
@@ -20,7 +28,7 @@ function extractURL(htmlText,baseURL,urls){
             }else{
             // previous line check validity of the URL
             newURL = normilizeUrl (linkElement.href)
-            urls.push(newURL)
+            urls[newURL] = (newURL in urls) ? urls[newURL]+=1 : urls[newURL]=1
             console.log("added this url => " + newURL)
             }
             }catch(err){
@@ -56,6 +64,7 @@ async function getHTML(URL){
 module.exports = {
     normilizeUrl,
     extractURL,
+    extractURLsLoop,
     removeTrailingSlahes,
     getHTML
 }
