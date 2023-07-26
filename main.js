@@ -1,14 +1,6 @@
-const  {extractURL,extractURLsLoop,removeTrailingSlahes,getHTML} = require ("./crawl.js")
+const  {extractURL,removeTrailingSlahes,crawlPage} = require ("./crawl.js")
 
-async function crawlPage(url,urls){
-    console.log("Actively crawling: "+ url)
-    const response = await fetch(url)
-    const htmltext = await response.text()
-    //console.log(htmltext)
-    extractURL(htmltext,url,urls)
-    console.log(urls)
-    return urls
-}
+
 
 function main(){
 if (process.argv.length<3){
@@ -29,7 +21,7 @@ try {
 }
 //console.log(baseURLObj.href)
 const baseURL = removeTrailingSlahes(baseURLObj.href)
-crawlPage(baseURL,urls={})
+crawlPage(url = baseURL,baseURL,urls={})
     return   
 }
 

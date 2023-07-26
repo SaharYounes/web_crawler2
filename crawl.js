@@ -1,4 +1,23 @@
 const { JSDOM } = require("jsdom");
+async function crawlAllPages(url,baseURL,urls){
+    console.log("Actively crawling: "+ url)
+    const response = await fetch(url)
+    const htmltext = await response.text()
+    //console.log(htmltext)
+    extractURL(htmltext,url,urls)
+    console.log(urls)
+    return urls
+}
+async function crawlPage(url,baseURL,urls){
+    console.log("Actively crawling: "+ url)
+    const response = await fetch(url)
+    const htmltext = await response.text()
+    //console.log(htmltext)
+    extractURL(htmltext,baseURL,urls)
+    console.log(urls)
+    return urls
+}
+
 function extractURLsLoop (htmlText,baseURL,urls){
     urls[baseURL] = 0
     for (const [key, value] of Object.entries(urls)) {
@@ -60,5 +79,6 @@ module.exports = {
     normilizeUrl,
     extractURL,
     extractURLsLoop,
+    crawlPage,
     removeTrailingSlahes
 }
