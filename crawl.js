@@ -42,7 +42,8 @@ function extractURL(htmlText,baseURL,urls){
     for (const linkElement of linkElements){
         if (linkElement.href[0]==="/"){//Relative URL
             newURL = normilizeUrl(`${baseURL}${linkElement.href}`)
-            if( newURL in urls){
+            if (newURL===null) {}
+            else if( newURL in urls){
                 urls[newURL]+=1
                 //console.log("this url repeated => " + newURL)  <--- Not neccesary as it repeats ALOT
             }else if(newURL===baseURL){// add without crawling cuz it's the main website
@@ -55,7 +56,8 @@ function extractURL(htmlText,baseURL,urls){
             }
         }else {//Absoulute URL
             newURL = normilizeUrl (linkElement.href)
-            if(newURL in urls){
+            if (newURL===null) {}
+            else if(newURL in urls){
                 urls[newURL]+=1
                 //console.log("this url repeated => " + newURL)  <--- Not neccesary as it repeats ALOT
             }else{
@@ -76,7 +78,8 @@ function extractURL(htmlText,baseURL,urls){
             URLObj = new URL(urlString.toLowerCase()) 
             console.log("try block entered inside Normilize")
         }catch(err){
-            throw new Error("thrown error : Invalid URL to crawl")
+            console.log("thrown error : Invalid URL to crawl")
+            return null
         }
     
     hostPath = `${URLObj.hostname}${URLObj.pathname}`   
@@ -93,16 +96,7 @@ function extractURL(htmlText,baseURL,urls){
 
     module.exports = {
         normilizeUrl,
-        extractURLsLoop,
         crawlPage,
-        removeTrailingSlahes
-    }
-    // -----------------------  UNUSED  --------------
-    function extractURLsLoop (htmlText,baseURL,urls){
-        urls[baseURL] = 0
-        for (const [key, value] of Object.entries(urls)) {
-            //console.log(`${key}: ${value}`);
-            console.log("actively crawling: "+key)
-            extractURL(key)
-        }
+        removeTrailingSlahes,
+        extractURL
     }

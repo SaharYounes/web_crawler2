@@ -12,7 +12,7 @@ test("extractURL   1:normal test     2:test Multiple links    3:Relative link   
             <a href="https://www.quel-canape.fr/canape-maison-du-monde-brooke/"> 5: </a>
         <body>
     </html>`
-    const actual  = extractURL(input,baseURL,urls = [])
-    const expected = ["heynode.com/tutorial/install-nodejs-locally-nvm","heynode.com/tutorial","heynode.com/path/tutorial"]
+    const actual  = extractURL(input,baseURL,urls = {})
+    const expected = {"heynode.com/tutorial/install-nodejs-locally-nvm":1,"heynode.com/tutorial":1,"heynode.com/path/tutorial":1,"www.quel-canape.fr/canape-maison-du-monde-brooke":1}
     expect(actual).toEqual(expected)    
 })
