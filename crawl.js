@@ -8,7 +8,8 @@ async function crawlPage(currentUrl,baseURL,urls){
         console.log("Invalid URL to crawl")
         return urls
     }
-    
+    //stop if the url is the same as the base URL
+
     const baseURLObj = new URL(baseURL)
     if (URLObj.hostname!==baseURLObj.hostname) {
         console.log("Not Crawling ! => " + currentUrl)
@@ -49,9 +50,10 @@ function extractURL(htmlText,baseURL,urls){
             }else{
                 urls[newURL]=1
                 console.log("        added this url => " + newURL)
-                if(!newURL===baseURL){
-                    crawlPage(`${baseURL}${linkElement.href}`,baseURL,urls)
-                }
+                // console.log(newURL)
+                // console.log(normilizeUrl(baseURL))
+                console.log()
+                crawlPage(`${baseURL}${linkElement.href}`,baseURL,urls)
             }
         }else {//Absoulute URL
             newURL = normilizeUrl (linkElement.href)
@@ -62,9 +64,9 @@ function extractURL(htmlText,baseURL,urls){
             }else{
                 urls[newURL]=1
                 console.log("        added this url => " + newURL)
-                if(!newURL===baseURL){
-                    crawlPage(linkElement.href,baseURL,urls)  //<--- By calling this instead of newURL, we can be sure the Protocol wasn't removed by NormilizeURL
-                }
+                // console.log(newURL)
+                // console.log(normilizeUrl(baseURL))
+                crawlPage(linkElement.href,baseURL,urls)  //<--- By calling this instead of newURL, we can be sure the Protocol wasn't removed by NormilizeURL
             }
 
         }
@@ -77,7 +79,7 @@ function extractURL(htmlText,baseURL,urls){
         let URLObj
         try{
             URLObj = new URL(urlString.toLowerCase()) 
-            console.log("try block entered inside Normilize")
+            //console.log("try block entered inside Normilize")
         }catch(err){
             console.log("thrown error : Invalid URL to crawl")
             return null
