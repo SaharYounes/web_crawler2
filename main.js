@@ -50,12 +50,9 @@ process.on('exit',()=>{
     //console.log(urls);
     let allKeys=Object.keys(urls)
     allKeys.sort(
-    //     (a,b)=>{
-    //     if (urls[a]>urls[b]){
-    //         return true
-    //     }
-    //     return false
-    // }
+         (a,b)=>{
+        return (-urls[a]+urls[b])
+    }
     )
     let temp_obj = {};
     for (let i = 0; i < allKeys.length; i++) {
