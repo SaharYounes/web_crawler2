@@ -46,13 +46,12 @@ function extractURL(htmlText,baseURL,urls){
             else if( newURL in urls){
                 urls[newURL]+=1
                 //console.log("this url repeated => " + newURL)  <--- Not neccesary as it repeats ALOT
-            }else if(newURL===baseURL){// add without crawling cuz it's the main website
-                urls[newURL]=1
-                console.log("        added this url => " + newURL)
             }else{
                 urls[newURL]=1
                 console.log("        added this url => " + newURL)
-                crawlPage(`${baseURL}${linkElement.href}`,baseURL,urls)
+                if(!newURL===baseURL){
+                    crawlPage(`${baseURL}${linkElement.href}`,baseURL,urls)
+                }
             }
         }else {//Absoulute URL
             newURL = normilizeUrl (linkElement.href)
@@ -63,7 +62,9 @@ function extractURL(htmlText,baseURL,urls){
             }else{
                 urls[newURL]=1
                 console.log("        added this url => " + newURL)
-                crawlPage(linkElement.href,baseURL,urls)  //<--- By calling this instead of newURL, we can be sure the Protocol wasn't removed by NormilizeURL
+                if(!newURL===baseURL){
+                    crawlPage(linkElement.href,baseURL,urls)  //<--- By calling this instead of newURL, we can be sure the Protocol wasn't removed by NormilizeURL
+                }
             }
 
         }
